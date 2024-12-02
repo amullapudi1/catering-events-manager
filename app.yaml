@@ -1,0 +1,10 @@
+runtime: python311
+entrypoint: gunicorn -b :$PORT server:app
+
+handlers:
+  - url: /static
+    static_dir: client/build/static
+
+  - url: /.*
+    static_files: client/build/index.html
+    upload: client/build/index.html
