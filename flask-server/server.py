@@ -58,7 +58,6 @@ def get_events():
 @app.route('/events', methods=['POST'])
 def create_event():
     data = request.json
-    db.session.execute(text("SET TRANSACTION ISOLATION LEVEL READ COMMITTED"))
     with db.session.begin():
         new_event = Event(
             event_date=data['event_date'],
@@ -74,7 +73,6 @@ def create_event():
 @app.route('/events/<int:event_id>', methods=['PUT'])
 def update_event(event_id):
     data = request.json
-    db.session.execute(text("SET TRANSACTION ISOLATION LEVEL READ COMMITTED"))
     with db.session.begin():
         event = Event.query.get(event_id)
         if event:
@@ -90,7 +88,6 @@ def update_event(event_id):
 
 @app.route('/events/<int:event_id>', methods=['DELETE'])
 def delete_event(event_id):
-    db.session.execute(text("SET TRANSACTION ISOLATION LEVEL READ COMMITTED"))
     with db.session.begin():
         event = Event.query.get(event_id)
         if event:
